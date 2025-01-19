@@ -9,4 +9,6 @@ class ParentNode(HTMLNode):
             raise ValueError("Missing tag")
         if self.children == None or not self.children:
             raise ValueError("Missing children")
-        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+        if not isinstance(self.children, list):
+            return f"<{self.tag}{self.props_to_html()}>{self.children.to_html()}</{self.tag}>"
+        return f"<{self.tag}{self.props_to_html()}>{''.join(list(map(lambda x: x.to_html(), self.children)))}</{self.tag}>"
