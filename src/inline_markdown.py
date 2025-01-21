@@ -28,10 +28,25 @@ def split_nodes_image(old_nodes):
             new_nodes.append(node)
             continue
         split_nodes = []
+        new_nodes.append(extract_markdown_images(node.text))
+    return new_nodes
         
 
-def split_node_link(old_nodes):
-    pass
+def split_nodes_link(old_nodes):
+    new_nodes = []
+    for node in old_nodes:
+        if node.text_type == TextType.LINK:
+            new_nodes.append(node)
+            continue
+        # print(node.text)
+        sections = []
+        list_of_tups = extract_markdown_links(node.text)
+        print(list_of_tups)
+        for tup in list_of_tups:
+            link_text, link_href = tup
+            sections.append(node.text.split(f"[{link_text}]({link_href})", 1))
+            print(f"SECTIONS: {sections}")
+    return new_nodes
 
 def extract_markdown_images(text):
     pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
@@ -43,6 +58,12 @@ def extract_markdown_links(text):
     matches = re.findall(pattern, text)
     return matches
 
+node = TextNode(
+    "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
+    TextType.NORMAL,
+)
+new_nodes = split_nodes_link([node])
+print(new_nodes)
 
 # OG approach, switched to one provided by boot.dev
 # def split_nodes_delimiter(old_nodes, delimiter, text_type):
