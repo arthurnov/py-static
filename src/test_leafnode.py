@@ -17,7 +17,7 @@ class TestLeafNode(unittest.TestCase):
     def test_repr(self):
         node = LeafNode("p", "This is a paragraph of text.", "")
         self.assertEqual(
-            "LeafNode(p, This is a paragraph of text., )", repr(node)
+            "LeafNode(\"p\", \"This is a paragraph of text.\", \"\")", repr(node)
         )
 if __name__ == "__main__":
     unittest.main()

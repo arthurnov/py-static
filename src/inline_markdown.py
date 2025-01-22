@@ -84,6 +84,15 @@ def extract_markdown_links(text):
     matches = re.findall(pattern, text)
     return matches
 
+def text_to_textnodes(text):
+    nodes = [TextNode(text, TextType.NORMAL)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
+
 # OG approach, switched to one provided by boot.dev
 # def split_nodes_delimiter(old_nodes, delimiter, text_type):
 #     new_nodes = []
@@ -120,3 +129,16 @@ def extract_markdown_links(text):
 # ['', 'And', ' this is text with a ', 'bold', ' word']
 # ['', 'And', ' ', 'this', ' is text with a bold word']
 # ['', 'And', '', 'this', ' is text with a bold word']
+
+# [
+#     TextNode("This is ", TextType.NORMAL), 
+#     TextNode("text", TextType.BOLD), 
+#     TextNode(" with an ", TextType.NORMAL), 
+#     TextNode("italic", TextType.ITALIC), 
+#     TextNode(" word and a ", TextType.NORMAL), 
+#     TextNode("code block", TextType.CODE), 
+#     TextNode(" and an ", TextType.NORMAL), 
+#     TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"), 
+#     TextNode(" and a ", TextType.NORMAL), 
+#     TextNode("link", TextType.LINK, "https://boot.dev")
+# ]

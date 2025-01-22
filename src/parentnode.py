@@ -14,4 +14,4 @@ class ParentNode(HTMLNode):
         return f"<{self.tag}{self.props_to_html()}>{''.join(list(map(lambda x: x.to_html(), self.children)))}</{self.tag}>"
     
     def __repr__(self):
-        return f"ParentNode({self.tag}, children: {self.children}, {self.props})"
+        return f"ParentNode(\"{self.tag}\", children: {self.children}, \"{self.props}\")"
