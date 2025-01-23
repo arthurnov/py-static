@@ -9,6 +9,10 @@ def markdown_to_html_node(markdown):
     for block in blocks:
         type = block_to_block_type(block)
         if type == "paragraph":
+            text_nodes = text_to_textnodes(block)
+            for node in text_nodes:
+                nodes.append(text_node_to_html_node(node))
+        if type == " heading":
             
         # print(f"BLOCK: \"{block}\"\nTYPE: {type}")
         # tnodes = text_to_textnodes(block)
@@ -17,10 +21,17 @@ def markdown_to_html_node(markdown):
         # for node in tnodes:
         #     hnodes.append(text_node_to_html_node(node))
         # nodes.extend(hnodes)
-    html = ParentNode("div",nodes)
-    print(html.to_html())
-    return html
+    div_node = ParentNode("div",nodes)
+    print(div_node.to_html())
+    return div_node
 ####
+
+# block_type_paragraph = "paragraph"
+# block_type_heading = "heading"
+# block_type_code = "code"
+# block_type_quote = "quote"
+# block_type_olist = "ordered_list"
+# block_type_ulist = "unordered_list"
 
 markdown = '''
 # this is my header
