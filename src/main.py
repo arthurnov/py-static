@@ -1,5 +1,5 @@
 from copystatic import clean_copy_src_dest
-from generate import generate_page
+from generate import generate_pages_recursive
 import os
 import shutil
 
@@ -18,7 +18,7 @@ def main():
     clean_copy_src_dest(src, dest)
 
     print("Generating page...")
-    generate_page(os.path.join(content, "index.md"), template_path, os.path.join(dest, "index.html"))
+    generate_pages_recursive(content, template_path, dest)
 
 
 
